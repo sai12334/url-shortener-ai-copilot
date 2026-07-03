@@ -5,7 +5,9 @@ import type {
   ShortenResponse,
 } from "../types";
 
-const API_BASE = "/api";
+// Railway Backend URL
+const API_BASE =
+  "https://url-shortener-ai-copilot-production.up.railway.app";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -14,19 +16,25 @@ async function handleResponse<T>(res: Response): Promise<T> {
       const body: ApiError = await res.json();
       if (body.detail) message = body.detail;
     } catch {
-      // response body wasn't JSON — keep the generic message
+      // Ignore non-JSON responses
     }
     throw new Error(message);
   }
+
   return res.json() as Promise<T>;
 }
 
-export async function analyzeRequirement(requirement: string): Promise<CopilotResponse> {
+export async function analyzeRequirement(
+  requirement: string
+): Promise<CopilotResponse> {
   const res = await fetch(`${API_BASE}/copilot/analyze`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ requirement }),
   });
+
   return handleResponse<CopilotResponse>(res);
 }
 
@@ -36,16 +44,21 @@ export async function shortenUrl(
 ): Promise<ShortenResponse> {
   const res = await fetch(`${API_BASE}/shorten`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       original_url: originalUrl,
       custom_alias: customAlias || undefined,
     }),
   });
+
   return handleResponse<ShortenResponse>(res);
 }
 
-export async function getAnalytics(shortCode: string): Promise<AnalyticsResponse> {
+export async function getAnalytics(
+  shortCode: string
+): Promise<AnalyticsResponse> {
   const res = await fetch(`${API_BASE}/analytics/${shortCode}`);
   return handleResponse<AnalyticsResponse>(res);
 }
