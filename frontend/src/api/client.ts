@@ -5,7 +5,6 @@ import type {
   ShortenResponse,
 } from "../types";
 
-// Railway Backend URL
 const API_BASE =
   "https://url-shortener-ai-copilot-production.up.railway.app";
 
@@ -16,11 +15,10 @@ async function handleResponse<T>(res: Response): Promise<T> {
       const body: ApiError = await res.json();
       if (body.detail) message = body.detail;
     } catch {
-      // Ignore non-JSON responses
+      // response body wasn't JSON — keep the generic message
     }
     throw new Error(message);
   }
-
   return res.json() as Promise<T>;
 }
 
@@ -60,5 +58,6 @@ export async function getAnalytics(
   shortCode: string
 ): Promise<AnalyticsResponse> {
   const res = await fetch(`${API_BASE}/analytics/${shortCode}`);
+
   return handleResponse<AnalyticsResponse>(res);
 }
