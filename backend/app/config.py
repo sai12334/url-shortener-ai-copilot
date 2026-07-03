@@ -20,5 +20,3 @@ BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 # Maximum attempts to generate a unique short code before giving up.
 # Protects against an infinite loop if the code space were ever exhausted.
 MAX_SHORT_CODE_GENERATION_ATTEMPTS = 5
-
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
