@@ -150,3 +150,8 @@ errors.
 | Database | SQLite (default) / PostgreSQL (via `DATABASE_URL`) |
 | Testing | Pytest, FastAPI `TestClient`, `pytest-cov` |
 | Docs | Markdown, Mermaid |
+
+
+
+
+https://url-shortener-ai-copilot.vercel.app/
